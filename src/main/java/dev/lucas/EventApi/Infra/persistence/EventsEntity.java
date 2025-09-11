@@ -29,6 +29,7 @@ public class EventsEntity {
     private String localEvent;
     private String organization;
     private String capacity;
+    @Enumerated(EnumType.STRING)
     private TypeEvent type;
 
 }
