@@ -7,6 +7,6 @@ public class CreateEventCaseImpl implements CreateEventCase{
 
     @Override
     public Event execute(Event event) {
-        return new Event(event.id(), event.name(), event.description(), event.start(), event.finish(), event.indentificator(), event.local(), event.organization(), event.capacity(), event.type());
+        return new Event(event.id(), event.name(), event.description(), event.start(), event.finish(), event.indentificator(), event.localEvent(), event.organization(), event.capacity(), event.type());
     }
 }
