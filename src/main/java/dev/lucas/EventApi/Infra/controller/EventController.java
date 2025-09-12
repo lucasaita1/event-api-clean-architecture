@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping ("/api/v1")
 public class EventController {
 
-    private CreateEventCase createEventCase;
+    private final CreateEventCase createEventCase;
 
     @PostMapping("/create")
     public EventResponse newEvent (@RequestBody EventRequest eventRequest){
