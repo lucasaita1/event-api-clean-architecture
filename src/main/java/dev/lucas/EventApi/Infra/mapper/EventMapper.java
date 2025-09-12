@@ -23,18 +23,17 @@ public class EventMapper {
     }
 
     public static EventResponse toResponse (Event event){
-        return EventResponse
-                .builder()
-                .id(event.id())
-                .name(event.name())
-                .description(event.description())
-                .dateStart(event.dateStart())
-                .dateFinish(event.dateFinish())
-                .identificator(event.identificator())
-                .localEvent(event.localEvent())
-                .capacity(event.capacity())
-                .organization(event.organization())
-                .type(event.type())
-                .build();
+        return new EventResponse(
+                event.id(),
+                event.name(),
+                event.description(),
+                event.dateStart(),
+                event.dateFinish(),
+                event.identificator(),
+                event.localEvent(),
+                event.capacity(),
+                event.organization(),
+                event.type()
+        );
     }
 }
