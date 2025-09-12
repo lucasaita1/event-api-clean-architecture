@@ -1,12 +1,8 @@
-package dev.lucas.EventApi.Infra.persistence;
+package dev.lucas.EventApi.Infra.persistence.entities;
 
 import dev.lucas.EventApi.Core.Enums.TypeEvent;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.NotFound;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +10,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @Entity
 @Table(name = "Events")
 public class EventsEntity {
@@ -25,7 +22,7 @@ public class EventsEntity {
     private String description;
     private LocalDateTime dateStart;
     private LocalDateTime dateFinish;
-    private String indentificator;
+    private String identificator;
     private String localEvent;
     private String organization;
     private String capacity;
