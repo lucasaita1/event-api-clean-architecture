@@ -5,7 +5,7 @@ import dev.lucas.EventApi.Infra.persistence.entities.EventsEntity;
 import lombok.experimental.UtilityClass;
 import org.springframework.stereotype.Component;
 
-@Component
+
 @UtilityClass
 public class EventEntityMapper {
 
