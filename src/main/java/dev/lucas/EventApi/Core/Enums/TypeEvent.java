@@ -5,5 +5,6 @@ public enum TypeEvent {
     WORKSHOP,
     SPEAKER,
     SEMINAR,
-    THEATER
+    THEATER,
+    PRESENTIAL
 }
