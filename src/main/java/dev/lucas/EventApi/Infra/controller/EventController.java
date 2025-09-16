@@ -2,6 +2,7 @@ package dev.lucas.EventApi.Infra.controller;
 
 import dev.lucas.EventApi.Core.entities.Event;
 import dev.lucas.EventApi.Core.usecases.CreateEventCase;
+import dev.lucas.EventApi.Core.usecases.FindEventByIdentificatorUseCase;
 import dev.lucas.EventApi.Core.usecases.ListEventCase;
 import dev.lucas.EventApi.Infra.dto.EventRequest;
 import dev.lucas.EventApi.Infra.dto.EventResponse;
@@ -24,6 +25,7 @@ public class EventController {
 
     private final CreateEventCase createEventCase;
     private final ListEventCase listEventCase;
+    private final FindEventByIdentificatorUseCase findEventByIdentificatorUseCase;
 
     @PostMapping("/create")
     public ResponseEntity<Map<String, Object>> newEvent (@RequestBody EventRequest eventRequest){
@@ -43,6 +45,14 @@ public class EventController {
                 .map(event -> EventMapper.toResponse(event))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(responses);
+    }
+
+
+    @GetMapping("/{identificator}")
+    public ResponseEntity<?> findByIdentificator(@PathVariable String identificator) {
+        return findEventByIdentificatorUseCase.execute(identificator)
+                .map(event -> ResponseEntity.ok(event))
+                .orElse(ResponseEntity.notFound().build());
     }
 
 }
