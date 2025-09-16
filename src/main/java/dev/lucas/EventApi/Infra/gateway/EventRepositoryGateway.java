@@ -45,4 +45,5 @@ public class EventRepositoryGateway implements EventGateway {
         Optional<EventsEntity> optionalEntity = eventRepository.findByIdentificator(identificator);
         return optionalEntity.map(entity -> EventEntityMapper.toDomain(entity));
     }
+
 }
