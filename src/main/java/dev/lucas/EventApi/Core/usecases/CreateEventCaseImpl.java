@@ -1,7 +1,9 @@
 package dev.lucas.EventApi.Core.usecases;
 
 import dev.lucas.EventApi.Core.entities.Event;
+import dev.lucas.EventApi.Core.entities.IdentifierGenerator;
 import dev.lucas.EventApi.Core.gateway.EventGateway;
+
 
 
 public class CreateEventCaseImpl implements CreateEventCase{
@@ -14,6 +16,21 @@ public class CreateEventCaseImpl implements CreateEventCase{
 
     @Override
     public Event execute(Event event) {
-        return eventGateway.createEvent(event);
+        String identificator = IdentifierGenerator.generate();
+
+        Event eventWithId = new Event(
+                event.id(),
+                event.name(),
+                event.description(),
+                event.dateStart(),
+                event.dateFinish(),
+                identificator, // valor gerado automaticamente
+                event.localEvent(),
+                event.organization(),
+                event.capacity(),
+                event.type()
+        );
+
+        return eventGateway.createEvent(eventWithId);
     }
 }
