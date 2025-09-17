@@ -18,8 +18,8 @@ public class EventEntityMapper {
                 event.dateFinish(),
                 event.identificator(),
                 event.localEvent(),
-                event.capacity(),
                 event.organization(),
+                event.capacity(),
                 event.type()
         );
     }
@@ -33,8 +33,8 @@ public class EventEntityMapper {
                 eventsEntity.getDateFinish(),
                 eventsEntity.getIdentificator(),
                 eventsEntity.getLocalEvent(),
-                eventsEntity.getCapacity(),
                 eventsEntity.getOrganization(),
+                eventsEntity.getCapacity(),
                 eventsEntity.getType());
     }
 }
