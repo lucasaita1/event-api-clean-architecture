@@ -2,7 +2,8 @@ package dev.lucas.EventApi.Infra.gateway;
 
 import dev.lucas.EventApi.Core.entities.Event;
 import dev.lucas.EventApi.Core.gateway.EventGateway;
-import dev.lucas.EventApi.Infra.exceptions.IllegalArgumentIdentifier;
+import dev.lucas.EventApi.Infra.exceptions.IllegalArgumentIdentifierException;
+import dev.lucas.EventApi.Infra.exceptions.NotFoundIdentifierException;
 import dev.lucas.EventApi.Infra.mapper.EventEntityMapper;
 import dev.lucas.EventApi.Infra.persistence.entities.EventsEntity;
 import dev.lucas.EventApi.Infra.persistence.repository.EventRepository;
@@ -24,7 +25,7 @@ public class EventRepositoryGateway implements EventGateway {
         Optional<EventsEntity> optionalEvents = eventRepository.findByIdentificator(verifier.getIdentificator());
 
         if (optionalEvents.isPresent()){
-            throw new IllegalArgumentIdentifier("Event already exists with this identifier!");
+            throw new IllegalArgumentIdentifierException("Event already exists with this identifier!");
         }
 
         EventsEntity entity = EventEntityMapper.toEntity(event);
@@ -43,7 +44,11 @@ public class EventRepositoryGateway implements EventGateway {
     @Override
     public Optional<Event> findByIdentificator(String identificator) {
         Optional<EventsEntity> optionalEntity = eventRepository.findByIdentificator(identificator);
+
+        if (optionalEntity.isEmpty()) {
+            throw new NotFoundIdentifierException("This identifier does not exist or is not valid in our database.");
+        }
+
         return optionalEntity.map(entity -> EventEntityMapper.toDomain(entity));
     }
-
 }
