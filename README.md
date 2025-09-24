@@ -1,79 +1,252 @@
-# Event API - Clean Architecture
+<div align="center">
 
-API de eventos desenvolvida em Java com Spring Boot, seguindo os princípios da Clean Architecture para garantir um código robusto, escalável e de fácil manutenção. Este projeto foca na separação clara de responsabilidades e alta testabilidade, proporcionando uma base sólida para o desenvolvimento de microsserviços de eventos.
+# 🎯 Event API - Clean Architecture
 
-## Visão Geral do Projeto
+</div>
 
-Este projeto implementa uma API RESTful para gerenciamento de eventos, utilizando as melhores práticas de desenvolvimento de software, com ênfase na Clean Architecture. A estrutura do projeto é modular, permitindo que cada camada tenha sua responsabilidade bem definida, facilitando a compreensão, a manutenção e a evolução do sistema.
+<div align="center">
 
-## Tecnologias Utilizadas
+[![Java](https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.java.net/projects/jdk/17/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.5-6DB33F?style=for-the-badge&logo=spring&logoColor=white)](https://spring.io/projects/spring-boot)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![AWS EC2](https://img.shields.io/badge/AWS%20EC2-Deployed-FF9900?style=for-the-badge&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/ec2/)
+[![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
-*   **Java 17**: Linguagem de programação principal.
-*   **Spring Boot 3.2.5**: Framework para construção de aplicações Java robustas e escaláveis.
-*   **Spring Data JPA**: Para persistência de dados, abstraindo a interação com o banco de dados.
-*   **PostgreSQL**: Banco de dados relacional utilizado para armazenar as informações dos eventos.
-*   **Flyway**: Ferramenta de migração de banco de dados para controle de versão do schema.
-*   **Lombok**: Biblioteca para reduzir o código boilerplate em classes Java.
-*   **Docker & Docker Compose**: Para orquestração e execução dos serviços em contêineres.
+**Uma API RESTful robusta para gerenciamento de eventos, construída com Java 17 e Spring Boot, seguindo os princípios da Clean Architecture.**
 
-## Arquitetura
+[🚀 Deploy em Produção](#-deploy-aws-ec2) • [📚 Documentação](#-documentação-da-api) • [🏗️ Arquitetura](#-arquitetura) • [⚡ Quick Start](#-quick-start)
 
-O projeto segue a **Clean Architecture**, organizada em camadas concêntricas para desacoplar as regras de negócio da infraestrutura. As principais camadas são:
+</div>
 
-*   **Core (Domínio)**: Contém as entidades de negócio, interfaces de gateway e casos de uso (use cases). É a camada mais interna e independente, onde as regras de negócio são definidas.
-    *   `entities`: Definição das entidades de domínio (ex: `Event`).
-    *   `gateway`: Interfaces que definem os contratos para interação com o mundo externo (ex: `EventGateway`).
-    *   `usecases`: Classes que implementam a lógica de negócio específica, orquestrando as entidades e gateways para realizar operações (ex: `CreateEventCase`, `ListEventCase`).
-*   **Infra (Infraestrutura)**: Responsável pela implementação dos detalhes técnicos, como persistência de dados, controladores REST e configurações de beans do Spring.
-    *   `beans`: Configurações de injeção de dependência.
-    *   `controller`: Controladores REST que expõem os endpoints da API.
-    *   `dto`: Objetos de Transferência de Dados para comunicação entre as camadas e com o cliente.
-    *   `exceptions`: Classes de exceção personalizadas.
-    *   `gateway`: Implementações das interfaces de gateway definidas na camada Core, interagindo com o banco de dados ou outros serviços externos.
-    *   `mapper`: Classes para mapeamento entre DTOs, entidades de domínio e entidades de persistência.
-    *   `persistence`: Repositórios JPA para acesso ao banco de dados.
+---
 
-## Como Executar o Projeto
+## 🌟 Características Principais
 
-### Pré-requisitos
+- 🏛️ **Clean Architecture** - Separação clara de responsabilidades entre camadas
+- 🔒 **Type Safety** - Records do Java para entidades imutáveis
+- 🎲 **Identificadores Únicos** - Sistema automático de geração de códigos de eventos
+- 🐘 **PostgreSQL** - Banco de dados robusto com migrações Flyway
+- 🐳 **Docker Ready** - Containerização completa com Docker Compose
+- ☁️ **AWS Deployed** - Ambiente de produção no Amazon EC2
+- 🧪 **Testável** - Arquitetura que facilita testes unitários e de integração
 
-Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
+---
 
-*   Java Development Kit (JDK) 17 ou superior
-*   Maven 3.x
-*   Docker e Docker Compose
+## 🏗️ Arquitetura
 
-### Passos para Execução
+A aplicação segue os princípios da **Clean Architecture**, organizando o código em camadas concêntricas que garantem baixo acoplamento e alta coesão:
 
-1.  **Clone o repositório:**
+```
+📦 Event API
+├── 🎯 Core (Domain)
+│   ├── entities/          # Entidades de negócio
+│   ├── enums/            # Tipos de eventos
+│   ├── gateway/          # Contratos de acesso a dados
+│   └── usecases/         # Regras de negócio
+└── 🔧 Infrastructure
+    ├── beans/            # Configuração de dependências
+    ├── controller/       # Endpoints REST
+    ├── dto/             # Objetos de transferência
+    ├── exceptions/      # Tratamento de erros
+    ├── gateway/         # Implementação dos gateways
+    ├── mapper/          # Conversão entre camadas
+    └── persistence/     # Acesso ao banco de dados
+```
 
-    ```bash
-    git clone https://github.com/lucasaita1/event-api-clean-architecture.git
-    cd event-api-clean-architecture
-    ```
+### 📊 Fluxo de Dados
 
-2.  **Inicie o banco de dados PostgreSQL com Docker Compose:**
+```mermaid
+graph LR
+    A[Client] --> B[Controller]
+    B --> C[Use Case]
+    C --> D[Gateway Interface]
+    D --> E[Gateway Implementation]
+    E --> F[Repository]
+    F --> G[Database]
+```
 
-    ```bash
-    docker-compose up -d postgres
-    ```
+---
 
-3.  **Execute as migrações do Flyway (opcional, mas recomendado para garantir o schema):**
+## ⚡ Quick Start
 
-    ```bash
-    mvn flyway:migrate
-    ```
+### 📋 Pré-requisitos
 
-4.  **Inicie a aplicação Spring Boot:**
+- ☕ **Java 17+** - [Download aqui](https://adoptium.net/)
+- 🔧 **Maven 3.8+** - [Guia de instalação](https://maven.apache.org/install.html)
+- 🐳 **Docker & Docker Compose** - [Get Docker](https://docs.docker.com/get-docker/)
 
-    ```bash
-    mvn spring-boot:run
-    ```
+### 🚀 Executando Localmente
 
-    A API estará disponível em `http://localhost:8080`.
+1. **Clone o repositório**
+```bash
+git clone https://github.com/lucasaita1/event-api-clean-architecture.git
+cd event-api-clean-architecture
+```
 
+2. **Inicie o banco de dados**
+```bash
+docker-compose up -d
+```
 
-## Próximos Passos: Deploy na AWS
+3. **Execute a aplicação**
+```bash
+# Desenvolvimento com H2 (em memória)
+mvn spring-boot:run
 
-Em breve, este projeto será implantado na Amazon Web Services (AWS), aproveitando a escalabilidade, segurança e robustez da plataforma. O deploy incluirá a conteinerização da aplicação utilizando Docker e a orquestração com serviços como Amazon ECS ou EKS, além do uso de Amazon RDS para o banco de dados PostgreSQL e outras ferramentas da AWS para monitoramento e gerenciamento. Mais detalhes sobre o processo de deploy serão adicionados em breve.
+# Produção com PostgreSQL
+mvn spring-boot:run -Dspring.profiles.active=prod
+```
 
+4. **Acesse a aplicação**
+- 🌐 API: `http://localhost:8080`
+- 🗄️ H2 Console: `http://localhost:8080/h2-console`
+
+---
+
+## 📚 Documentação da API
+
+### 🎫 Endpoints Disponíveis
+
+#### 📝 Criar Evento
+```http
+POST /api/v1/create
+Content-Type: application/json
+
+{
+  "name": "Tech Conference 2025",
+  "description": "Conferência de tecnologia e inovação",
+  "dateStart": "2025-03-15T09:00:00",
+  "dateFinish": "2025-03-15T18:00:00",
+  "localEvent": "Centro de Convenções",
+  "organization": "Tech Community",
+  "capacity": "500",
+  "type": "WORKSHOP"
+}
+```
+
+#### 📋 Listar Eventos
+```http
+GET /api/v1/
+```
+
+#### 🔍 Buscar por Identificador
+```http
+GET /api/v1/{identificator}
+```
+
+### 🏷️ Tipos de Eventos Suportados
+
+| Tipo | Descrição |
+|------|-----------|
+| `MUSICAL` | Eventos musicais e shows |
+| `WORKSHOP` | Workshops e oficinas |
+| `SPEAKER` | Palestras e apresentações |
+| `SEMINAR` | Seminários acadêmicos |
+| `THEATER` | Apresentações teatrais |
+| `PRESENTIAL` | Eventos presenciais gerais |
+
+---
+
+## 🌐 Deploy AWS EC2
+
+### ☁️ Ambiente de Produção
+
+A aplicação está **deployada e funcionando** em uma instância EC2 da Amazon Web Services, proporcionando:
+
+- 🔧 **Alta Disponibilidade** - Infraestrutura robusta da AWS
+- 🚀 **Performance Otimizada** - Instâncias dimensionadas adequadamente
+- 🔒 **Segurança** - VPC configurada com security groups
+- 📊 **Monitoramento** - CloudWatch para métricas e logs
+- 🔄 **Escalabilidade** - Preparado para auto-scaling quando necessário
+
+### 🛠️ Stack de Deploy
+
+```
+🌐 Internet
+    ↓
+🔒 Application Load Balancer
+    ↓
+🖥️ EC2 Instance (Ubuntu)
+    ├── 🐳 Docker Container (Event API)
+    └── 🐘 PostgreSQL Database
+```
+
+---
+
+## 🔧 Stack Tecnológica
+
+### Backend Core
+- **Java 17** - Linguagem principal com recursos modernos
+- **Spring Boot 3.5.5** - Framework de aplicação
+- **Spring Data JPA** - Persistência de dados
+- **PostgreSQL 14** - Banco de dados principal
+- **H2** - Banco em memória para testes
+
+### DevOps & Tools
+- **Flyway** - Controle de versão do banco
+- **Docker** - Containerização
+- **Maven** - Gerenciamento de dependências
+- **Lombok** - Redução de boilerplate
+
+### Testing & Quality
+- **JUnit 5** - Framework de testes
+- **Mockito** - Mocking para testes unitários
+- **Clean Architecture** - Padrão arquitetural
+
+---
+
+## 🎯 Funcionalidades Implementadas
+
+- ✅ **Criação de Eventos** - Com geração automática de identificadores únicos
+- ✅ **Listagem de Eventos** - Recuperação de todos os eventos cadastrados
+- ✅ **Busca por Identificador** - Localização específica de eventos
+- ✅ **Validação de Dados** - Tratamento robusto de erros
+- ✅ **Migrações de Banco** - Controle de versão com Flyway
+- ✅ **Containerização** - Deploy simplificado com Docker
+- ✅ **Clean Architecture** - Código maintível e testável
+
+---
+
+## 🚀 Próximos Passos
+
+### Roadmap de Desenvolvimento
+
+- [ ] 🔐 **Autenticação JWT** - Sistema de login e autorização
+- [ ] 📧 **Notificações** - Email/SMS para participantes
+- [ ] 🎟️ **Sistema de Inscrições** - Gestão de participantes
+- [ ] 📈 **Dashboard Analytics** - Métricas e relatórios
+- [ ] 🔍 **Busca Avançada** - Filtros por data, tipo, localização
+- [ ] 📱 **API Mobile** - Endpoints otimizados para apps
+- [ ] 🌐 **Multi-tenant** - Suporte a múltiplas organizações
+
+---
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+---
+
+## 🤝 Contribuições
+
+Contribuições são sempre bem-vindas! Para contribuir:
+
+1. 🍴 Faça um fork do projeto
+2. 🌿 Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. 💾 Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. 📤 Push para a branch (`git push origin feature/AmazingFeature`)
+5. 🎯 Abra um Pull Request
+
+---
+
+## 👨‍💻 Desenvolvido por
+
+**Lucas Aita** - [GitHub](https://github.com/lucasaita1)
+
+⭐ Se este projeto te ajudou, considere dar uma estrela!
+
+---
+
+<div align="center">
+  <sub>Construído com ❤️ usando Java e Spring Boot</sub>
+</div>
