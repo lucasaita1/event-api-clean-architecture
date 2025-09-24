@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎯 Event API - Clean Architecture
+#  Event API - Clean Architecture
 
 </div>
 
