@@ -22,3 +22,6 @@ jobs:
 
       - name: build project
         run: mvn clean install
+
+      - name: run tests
+        run: mvn test
